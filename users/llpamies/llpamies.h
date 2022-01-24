@@ -9,22 +9,17 @@
 #define MY_R SFT_T(KC_R)
 #define MY_S ALT_T(KC_S)
 #define MY_Z GUI_T(KC_Z)
-#define MY_SLASH GUI_T(KC_SLASH)
+#define MY_K GUI_T(KC_K)
 #define MY_E ALT_T(KC_E)
 #define MY_I SFT_T(KC_I)
 #define MY_O CTL_T(KC_O)
+#define ONESHOT OSM(MOD_MEH)
 
 enum layers {
   _COLEMAK = 0,
   _SYMBOL,
   _NAVIGATION,
   _ADJUST
-};
-
-enum keycodes {
-  VIM_SAVE = SAFE_RANGE + 1024,
-  VIM_QUIT,
-  VIM_WRITE,
 };
 
 layer_state_t layer_state_set_user(layer_state_t state);
