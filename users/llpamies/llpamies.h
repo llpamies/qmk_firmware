@@ -2,7 +2,7 @@
 
 #include "quantum.h"
 
-#define SYMB_BSPC LT(_SYMBOL, KC_BSPACE)
+#define SYMB_E LT(_SYMBOL, KC_E)
 #define NAV_SPC LT(_NAVIGATION, KC_SPACE)
 #define UNIQ(X) RALT(RCTL(RGUI(RSFT(X))))
 #define MY_A CTL_T(KC_A)
@@ -10,7 +10,7 @@
 #define MY_S ALT_T(KC_S)
 #define MY_Z GUI_T(KC_Z)
 #define MY_K GUI_T(KC_K)
-#define MY_E ALT_T(KC_E)
+#define MY_M ALT_T(KC_M)
 #define MY_I SFT_T(KC_I)
 #define MY_O CTL_T(KC_O)
 #define ONESHOT OSM(MOD_MEH)

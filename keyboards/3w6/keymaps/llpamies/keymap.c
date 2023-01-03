@@ -1,55 +1,12 @@
 #include QMK_KEYBOARD_H
-
 #include "llpamies.h"
-
-#define ADAPTIVE_TERM 1000
-
-// We should swap n <---> h if prior letter is any of: tscpgwx
-#define SHOULD_SWAP(code) (code == KC_T || code == KC_S || code == KC_C || code == KC_P || code == KC_G || code == KC_W || code == KC_X)
-
-uint16_t adaptive_keycode = KC_NO;
-uint16_t prior_keycode = KC_NO;
-uint16_t prior_keydown = 0;
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  bool return_state = true;
-
-  if (record->event.pressed) {
-    switch(keycode) {
-      case KC_H:
-        if (SHOULD_SWAP(prior_keycode) && (timer_elapsed(prior_keydown) < ADAPTIVE_TERM)) {
-          adaptive_keycode = KC_N;
-          register_code(adaptive_keycode);
-          return_state = false;
-        }
-        break;
-      case KC_N:
-        if (SHOULD_SWAP(prior_keycode) && (timer_elapsed(prior_keydown) < ADAPTIVE_TERM)) {
-          adaptive_keycode = KC_H;
-          register_code(adaptive_keycode);
-          return_state = false;
-        }
-        break;
-      }
-      prior_keycode = keycode;
-      prior_keydown = timer_read(); // (re)start prior timing
-  }
-  else {
-    if (adaptive_keycode != KC_NO) {
-      unregister_code(adaptive_keycode);
-      adaptive_keycode = KC_NO;
-      return_state = false;
-    }
-  }
-  return return_state;
-};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_COLEMAK] = LAYOUT(
-   ONESHOT, KC_W,    KC_F,       KC_P,      KC_COMMA,  KC_DOT,   KC_L,    KC_U,      KC_Y,   KC_SLASH,
-   MY_A,    MY_R,    MY_S,       KC_T,      KC_G,      KC_H,     KC_N,    MY_E,      MY_I,   MY_O,
-   MY_Z,    KC_X,    KC_C,       KC_D,      KC_V,      KC_Q,     KC_M,    KC_J,      KC_B,   MY_K,
-                     G(KC_LBRC), SYMB_BSPC, KC_DELETE, KC_TAB,   NAV_SPC, G(KC_RBRC)
+   ONESHOT, KC_W,    KC_F,    KC_P,   KC_QUES,    KC_SLASH,   KC_L,    KC_U,      KC_Y,   LCTL(KC_A),
+   MY_A,    MY_R,    MY_S,    KC_T,   KC_COMMA,   KC_DOT,     KC_N,    MY_M,      MY_I,   MY_O,
+   MY_Z,    KC_X,    KC_C,    KC_D,   G(KC_LBRC), G(KC_RBRC), KC_H,    KC_J,      KC_B,   MY_K,
+                     KC_BSPC, SYMB_E, KC_DELETE,  KC_TAB,     NAV_SPC, _______
 ),
 [_SYMBOL] = LAYOUT(
   _______, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC,  KC_AMPR, KC_ASTR,  _______, _______,
