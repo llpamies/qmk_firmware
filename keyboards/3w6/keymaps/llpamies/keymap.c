@@ -6,7 +6,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ONESHOT, KC_W,    KC_F,    KC_P,   KC_QUES,    KC_SLASH,   KC_L,    KC_U,      KC_Y,   LCTL(KC_A),
    MY_A,    MY_R,    MY_S,    KC_T,   KC_COMMA,   KC_DOT,     KC_N,    MY_M,      MY_I,   MY_O,
    MY_Z,    KC_X,    KC_C,    KC_D,   G(KC_LBRC), G(KC_RBRC), KC_H,    KC_J,      KC_B,   MY_K,
-                     KC_BSPC, SYMB_E, KC_DELETE,  KC_TAB,     NAV_SPC, _______
+                     KC_BSPC, SYMB_E, KC_DELETE,  KC_TAB,     NAV_SPC, KC_TAB
 ),
 [_SYMBOL] = LAYOUT(
   _______, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC,  KC_AMPR, KC_ASTR,  _______, _______,
