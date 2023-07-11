@@ -2,18 +2,26 @@
 
 #include "quantum.h"
 
+#define CS(X) LCTL(LSFT(X))
+#define UNIQ(X) RALT(RCTL(RGUI(RSFT(X))))
+#define ONESHOT OSM(MOD_MEH)
+
+// Layer functions:
 #define SYMB_E LT(_SYMBOL, KC_E)
 #define NAV_SPC LT(_NAVIGATION, KC_SPACE)
-#define UNIQ(X) RALT(RCTL(RGUI(RSFT(X))))
+
+// Left hand home-row modifiers:
 #define MY_A CTL_T(KC_A)
 #define MY_R SFT_T(KC_R)
 #define MY_S ALT_T(KC_S)
 #define MY_Z GUI_T(KC_Z)
+
+// Right hand home-row modifiers:
 #define MY_K GUI_T(KC_K)
-#define MY_M ALT_T(KC_M)
+#define MY_H ALT_T(KC_H)
 #define MY_I SFT_T(KC_I)
 #define MY_O CTL_T(KC_O)
-#define ONESHOT OSM(MOD_MEH)
+
 
 enum layers {
   _COLEMAK = 0,

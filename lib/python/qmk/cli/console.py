@@ -253,13 +253,13 @@ def list_devices(device_finder):
                 cli.log.info("\t%s:%s\t%s", int2hex(dev.idVendor), int2hex(dev.idProduct), KNOWN_BOOTLOADERS[(int2hex(dev.idVendor), int2hex(dev.idProduct))])
 
 
-@cli.argument('--bootloaders', arg_only=True, default=True, action='store_boolean', help='displaying bootloaders.')
-@cli.argument('-d', '--device', help='Device to select - uses format <pid>:<vid>[:<index>].')
-@cli.argument('-l', '--list', arg_only=True, action='store_true', help='List available hid_listen devices.')
-@cli.argument('-n', '--numeric', arg_only=True, action='store_true', help='Show VID/PID instead of names.')
-@cli.argument('-t', '--timestamp', arg_only=True, action='store_true', help='Print the timestamp for received messages as well.')
-@cli.argument('-w', '--wait', type=int, default=1, help="How many seconds to wait between checks (Default: 1)")
-@cli.subcommand('Acquire debugging information from usb hid devices.', hidden=False if cli.config.user.developer else True)
+#@cli.argument('--bootloaders', arg_only=True, default=True, action='store_boolean', help='displaying bootloaders.')
+#@cli.argument('-d', '--device', help='Device to select - uses format <pid>:<vid>[:<index>].')
+#@cli.argument('-l', '--list', arg_only=True, action='store_true', help='List available hid_listen devices.')
+#@cli.argument('-n', '--numeric', arg_only=True, action='store_true', help='Show VID/PID instead of names.')
+#@cli.argument('-t', '--timestamp', arg_only=True, action='store_true', help='Print the timestamp for received messages as well.')
+#@cli.argument('-w', '--wait', type=int, default=1, help="How many seconds to wait between checks (Default: 1)")
+#@cli.subcommand('Acquire debugging information from usb hid devices.', hidden=False if cli.config.user.developer else True)
 def console(cli):
     """Acquire debugging information from usb hid devices
     """
