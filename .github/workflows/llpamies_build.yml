@@ -12,6 +12,7 @@ jobs:
         run: |
           export QMK_HOME='~/qmk_firmware'
           pip install milc
+          ~/qmk_firmware/util/qmk_install.sh
           python3 -m pip install --user qmk
           qmk setup -y
           qmk compile -kb 3w6/rev2 -km llpamies
