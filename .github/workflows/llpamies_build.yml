@@ -1,0 +1,22 @@
+name: Build 3W6 llpamies Firmware
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Clone llpamies QMK
+        run: git clone https://github.com/llpamies/qmk_firmware.git
+      - name: Install qmk deps
+        run: cd qmk_firmware && ./util/qmk_install.sh && python3 -m pip install qmk
+      - name: Install git submodules
+        run: cd qmk_firmware && make git-submodule
+      - name: Compile firmware
+        run: qmk compile -kb 3w6/rev2 -km llpamies
+      - name: Upload compiled firmware (build artifact)
+        uses: actions/upload-artifact@v2
+        with:
+          name: Keychron K6 QMK Firmware
+          path: 3w6_rev2_llpamies.hex
