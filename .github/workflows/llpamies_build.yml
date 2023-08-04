@@ -21,7 +21,7 @@ jobs:
           cp 3w6_rev2_llpamies.hex ~/
 
       - name: Upload compiled firmware (build artifact)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: 3W6_llpamies_firmware
           path: ~/3w6_rev2_llpamies.hex
