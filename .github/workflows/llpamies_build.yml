@@ -11,8 +11,9 @@ jobs:
       - name: Setup and Build
         run: |
           export QMK_HOME='~/work/qmk_firmware/qmk_firmware'
+          cd ~/work/qmk_firmware/qmk_firmware
+          make git-submodule
           pip install milc
-          find ~/work/
           ~/work/qmk_firmware/qmk_firmware/util/qmk_install.sh
           python3 -m pip install --user qmk
           qmk setup -y
