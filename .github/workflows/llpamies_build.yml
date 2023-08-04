@@ -6,13 +6,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup and Build
         run: |
-          export QMK_HOME='~/qmk_firmware'
+          export QMK_HOME='~/work/qmk_firmware/qmk_firmware'
           pip install milc
-          ~/qmk_firmware/util/qmk_install.sh
+          find ~/work/
+          ~/work/qmk_firmware/qmk_firmware/util/qmk_install.sh
           python3 -m pip install --user qmk
           qmk setup -y
           qmk compile -kb 3w6/rev2 -km llpamies
