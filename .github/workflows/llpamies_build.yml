@@ -18,9 +18,10 @@ jobs:
           python3 -m pip install --user qmk
           qmk setup -y
           qmk compile -kb 3w6/rev2 -km llpamies
+          cp 3w6_rev2_llpamies.hex ~/
 
       - name: Upload compiled firmware (build artifact)
         uses: actions/upload-artifact@v2
         with:
           name: 3W6_llpamies_firmware
-          path: ~/qmk_firmware/3w6_rev2_llpamies.hex
+          path: ~/3w6_rev2_llpamies.hex
