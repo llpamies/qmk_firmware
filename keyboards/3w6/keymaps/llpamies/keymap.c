@@ -15,10 +15,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                     _______, _______, _______, _______, _______, _______
 ),
 [_NAVIGATION] = LAYOUT(
-  C(KC_X), CS(KC_V), _______,   _______, KC_MUTE, LCTL(KC_H), LCTL(KC_J), LCTL(KC_K), LCTL(KC_L), _______,
-  C(KC_C), C(KC_V),  _______,   KC_MPLY, KC_VOLU, KC_LEFT,    KC_DOWN,    KC_UP,      KC_RIGHT,   _______,
-  C(KC_Z), C(KC_Y),  _______,   KC_MNXT, KC_VOLD, KC_HOME,    KC_PGDOWN,  KC_PGUP,    KC_END,     _______,
-                     KC_DELETE, _______, _______, _______,    _______,    _______
+  C(KC_X), CS(KC_V), _______,  _______, KC_MUTE,   LCTL(KC_H), LCTL(KC_J), LCTL(KC_K), LCTL(KC_L), _______,
+  C(KC_C), C(KC_V),  _______,  KC_MPLY, KC_VOLU,   KC_LEFT,    KC_DOWN,    KC_UP,      KC_RIGHT,   _______,
+  C(KC_Z), C(KC_Y),  _______,  KC_MNXT, KC_VOLD,   KC_HOME,    KC_PGDOWN,  KC_PGUP,    KC_END,     _______,
+                     _______,  _______, KC_DELETE, _______,    _______,    _______
   ),
 [_ADJUST] = LAYOUT(
   _______, _______, _______, _______, RESET,   RESET,   _______, _______, _______, _______,
