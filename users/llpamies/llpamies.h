@@ -28,6 +28,7 @@ enum layers {
   _COLEMAK = 0,
   _SYMBOL,
   _NAVIGATION,
+  _MOUSE,
   _ADJUST
 };
 
