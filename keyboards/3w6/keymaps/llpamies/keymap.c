@@ -6,7 +6,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ONESHOT, KC_W,    KC_F,    KC_P,   KC_COMMA, KC_DOT,  KC_SLASH, KC_J,   KC_Y,   LCTL(KC_A),
    MY_A,    MY_R,    MY_S,    KC_T,   KC_G,     KC_M,    KC_N,     MY_H,   MY_I,   MY_O,
    MY_Z,    KC_X,    KC_C,    KC_D,   KC_V,     KC_Q,    KC_L,     KC_U,   KC_B,   MY_K,
-                     _______, SYMB_E, KC_BSPC,  KC_TAB,  NAV_SPC,  _______
+                     _______, SYMB_E, MOU_BACK, KC_TAB,  NAV_SPC,  _______
 ),
 [_SYMBOL] = LAYOUT(
   _______, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR,  _______, _______,
@@ -15,10 +15,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                     _______, _______, _______, _______, _______, _______
 ),
 [_NAVIGATION] = LAYOUT(
-  C(KC_X), CS(KC_V), _______,  _______, KC_MUTE,   LCTL(KC_H), LCTL(KC_J), LCTL(KC_K), LCTL(KC_L), _______,
-  C(KC_C), C(KC_V),  _______,  KC_MPLY, KC_VOLU,   KC_LEFT,    KC_DOWN,    KC_UP,      KC_RIGHT,   _______,
-  C(KC_Z), C(KC_Y),  _______,  KC_MNXT, KC_VOLD,   KC_HOME,    KC_PGDOWN,  KC_PGUP,    KC_END,     _______,
-                     _______,  _______, KC_DELETE, _______,    _______,    _______
+  C(KC_X), CS(KC_V), _______,  _______, KC_MUTE, LCTL(KC_H), LCTL(KC_J), LCTL(KC_K), LCTL(KC_L), _______,
+  C(KC_C), C(KC_V),  _______,  KC_MPLY, KC_VOLU, KC_LEFT,    KC_DOWN,    KC_UP,      KC_RIGHT,   _______,
+  C(KC_Z), C(KC_Y),  _______,  KC_MNXT, KC_VOLD, KC_HOME,    KC_PGDOWN,  KC_PGUP,    KC_END,     _______,
+                     _______,  KC_DEL,  KC_DEL,  _______,    _______,    _______
+  ),
+[_MOUSE] = LAYOUT(
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
+  _______, _______, _______, _______, _______, _______, KC_BTN1, KC_BTN2, _______, _______,
+                    _______, _______, _______, _______, _______, _______
   ),
 [_ADJUST] = LAYOUT(
   _______, _______, _______, _______, RESET,   RESET,   _______, _______, _______, _______,

@@ -9,6 +9,7 @@
 // Layer functions:
 #define SYMB_E LT(_SYMBOL, KC_E)
 #define NAV_SPC LT(_NAVIGATION, KC_SPACE)
+#define MOU_BACK LT(_MOUSE, KC_BSPC)
 
 // Left hand home-row modifiers:
 #define MY_A CTL_T(KC_A)
