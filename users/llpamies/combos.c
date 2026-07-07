@@ -25,8 +25,8 @@ combo_t key_combos[] = {
   // Programming symbols.
   COMBO(combo_paren_open, KC_LPRN),
   COMBO(combo_paren_close, KC_RPRN),
-  COMBO(combo_brack_open, KC_LBRACKET),
-  COMBO(combo_brack_close, KC_RBRACKET),
+  COMBO(combo_brack_open, KC_LBRC),
+  COMBO(combo_brack_close, KC_RBRC),
   COMBO(combo_brace_open, KC_LCBR),
   COMBO(combo_brace_close, KC_RCBR),
   COMBO(combo_triang_open, KC_LT),
@@ -39,7 +39,7 @@ combo_t key_combos[] = {
 
   // Punctuation symbols.
   COMBO(combo_colon, KC_COLON),
-  COMBO(combo_semicolon, KC_SCOLON),
+  COMBO(combo_semicolon, KC_SCLN),
   COMBO(combo_single_quote, KC_QUOTE),
   COMBO(combo_double_quote, KC_DQUO),
 };
