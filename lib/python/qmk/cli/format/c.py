@@ -1,17 +1,16 @@
 """Format C code according to QMK's style.
 """
-from os import path
 from shutil import which
 from subprocess import CalledProcessError, DEVNULL, Popen, PIPE
 
 from argcomplete.completers import FilesCompleter
 from milc import cli
 
-from qmk.path import normpath
+from qmk.path import normpath, is_relative_to
 from qmk.c_parse import c_source_files
 
-c_file_suffixes = ('c', 'h', 'cpp')
-core_dirs = ('drivers', 'quantum', 'tests', 'tmk_core', 'platforms')
+c_file_suffixes = ('c', 'h', 'cpp', 'hpp')
+core_dirs = ('drivers', 'quantum', 'tests', 'tmk_core', 'platforms', 'modules')
 ignored = ('tmk_core/protocol/usb_hid', 'platforms/chibios/boards')
 
 
@@ -68,18 +67,18 @@ def cformat_run(files):
 def filter_files(files, core_only=False):
     """Yield only files to be formatted and skip the rest
     """
-    if core_only:
-        # Filter non-core files
-        for index, file in enumerate(files):
+    files = list(map(normpath, filter(None, files)))
+
+    for file in files:
+        if core_only:
             # The following statement checks each file to see if the file path is
             # - in the core directories
             # - not in the ignored directories
-            if not any(i in str(file) for i in core_dirs) or any(i in str(file) for i in ignored):
-                files[index] = None
+            if not any(is_relative_to(file, i) for i in core_dirs) or any(is_relative_to(file, i) for i in ignored):
                 cli.log.debug("Skipping non-core file %s, as '--core-only' is used.", file)
+                continue
 
-    for file in files:
-        if file and file.name.split('.')[-1] in c_file_suffixes:
+        if file.suffix[1:] in c_file_suffixes:
             yield file
         else:
             cli.log.debug('Skipping file %s', file)
@@ -100,7 +99,7 @@ def format_c(cli):
 
         if not files:
             cli.log.error('No C files in filelist: %s', ', '.join(map(str, cli.args.files)))
-            exit(0)
+            return False
 
         if cli.args.all_files:
             cli.log.warning('Filenames passed with -a, only formatting: %s', ','.join(map(str, files)))
@@ -118,12 +117,8 @@ def format_c(cli):
             print(git_diff.stderr)
             return git_diff.returncode
 
-        files = []
-
-        for file in git_diff.stdout.strip().split('\n'):
-            if not any([file.startswith(ignore) for ignore in ignored]):
-                if path.exists(file) and file.split('.')[-1] in c_file_suffixes:
-                    files.append(file)
+        changed_files = git_diff.stdout.strip().split('\n')
+        files = list(filter_files(changed_files, True))
 
     # Sanity check
     if not files:
