@@ -5,23 +5,31 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      QMK_HOME: ${{ github.workspace }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Setup and Build
+      # The runner's system python is externally managed (PEP 668), so a bare
+      # `pip install` into it fails. setup-python gives us a writable one.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install toolchain
         run: |
-          export QMK_HOME='~/work/qmk_firmware/qmk_firmware'
-          cd ~/work/qmk_firmware/qmk_firmware
+          sudo apt-get update
+          sudo apt-get install -y gcc-avr avr-libc
+          python3 -m pip install qmk
+
+      - name: Build
+        run: |
           make git-submodule
-          pip install milc
-          ~/work/qmk_firmware/qmk_firmware/util/qmk_install.sh
-          python3 -m pip install --user qmk
-          qmk setup -y
           qmk compile -kb 3w6/rev2 -km llpamies
-          cp 3w6_rev2_llpamies.hex ~/
 
       - name: Upload compiled firmware (build artifact)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: 3W6_llpamies_firmware
-          path: ~/3w6_rev2_llpamies.hex
+          path: 3w6_rev2_llpamies.hex
+          if-no-files-found: error
