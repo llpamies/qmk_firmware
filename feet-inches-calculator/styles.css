@@ -1,0 +1,293 @@
+:root {
+  --bg: #f4f2ee;
+  --panel: #ffffff;
+  --ink: #1b1a17;
+  --ink-soft: #6a6660;
+  --line: #ddd8d0;
+  --accent: #b4530a;
+  --accent-soft: #fdf0e3;
+  --good: #1f6d3f;
+  --good-soft: #e6f4eb;
+  --bad: #a3271f;
+  --bad-soft: #fbeceb;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --radius: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #171614;
+    --panel: #211f1c;
+    --ink: #ece8e1;
+    --ink-soft: #9b958c;
+    --line: #35322d;
+    --accent: #f0913f;
+    --accent-soft: #3a2a17;
+    --good: #7fca9b;
+    --good-soft: #1d2f24;
+    --bad: #f0918a;
+    --bad-soft: #33201e;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 2rem 1rem 4rem;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+.wrap { max-width: 640px; margin: 0 auto; }
+
+/* ---------- header ---------- */
+
+.head { margin-bottom: 1.5rem; }
+
+h1 {
+  margin: 0 0 .4rem;
+  font-size: 1.6rem;
+  letter-spacing: -.02em;
+}
+
+.tagline {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: .95rem;
+  max-width: 46ch;
+}
+
+/* ---------- cards ---------- */
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.15rem;
+  margin-bottom: 1rem;
+}
+
+.field + .controls { margin-top: 1.1rem; }
+.controls + .field { margin-top: 1.1rem; }
+
+label {
+  display: block;
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: .4rem;
+}
+
+textarea, input[type="text"] {
+  width: 100%;
+  padding: .6rem .7rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 1rem;
+  resize: vertical;
+}
+
+textarea:focus, input[type="text"]:focus, select:focus, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.field.has-error textarea,
+.field.has-error input[type="text"] {
+  border-color: var(--bad);
+}
+
+.note {
+  margin: .45rem 0 0;
+  font-size: .85rem;
+  color: var(--ink-soft);
+  min-height: 1.2em;
+}
+
+.note.error { color: var(--bad); }
+.note code { font-family: var(--mono); }
+
+/* ---------- controls ---------- */
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.ops { display: flex; gap: .4rem; }
+
+.op {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .5rem .9rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: .92rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.op:hover { border-color: var(--accent); color: var(--ink); }
+
+.op.is-on {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 650;
+}
+
+.op-sign { font-family: var(--mono); font-size: 1.05rem; }
+
+.precision { display: flex; align-items: center; gap: .5rem; }
+.precision label { margin: 0; }
+
+select {
+  padding: .45rem .5rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: .92rem;
+  font-family: var(--mono);
+  cursor: pointer;
+}
+
+/* ---------- result ---------- */
+
+.result-card { padding-bottom: 1rem; }
+
+.result-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .6rem;
+}
+
+.result-head h2 {
+  margin: 0;
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.copy {
+  padding: .3rem .7rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: .82rem;
+  cursor: pointer;
+}
+
+.copy:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.copy:disabled { opacity: .4; cursor: default; }
+.copy.copied { color: var(--good); border-color: var(--good); }
+
+.result {
+  display: block;
+  font-family: var(--mono);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  min-height: 1.6em;
+}
+
+.result .hit {
+  background: var(--good-soft);
+  color: var(--good);
+  font-weight: 650;
+  padding: .1em .25em;
+  margin: 0 -.05em;
+  border-radius: 4px;
+}
+
+.result.is-error { color: var(--bad); font-family: inherit; font-size: .95rem; }
+.result.is-empty { color: var(--ink-soft); font-family: inherit; font-size: .95rem; }
+
+.math {
+  margin: .7rem 0 0;
+  padding-top: .7rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: .84rem;
+  color: var(--ink-soft);
+  min-height: 1.2em;
+  word-break: break-word;
+}
+
+.math:empty { display: none; }
+
+/* ---------- examples ---------- */
+
+.examples { margin: 1.75rem 0 1.5rem; }
+
+.examples h2, .help h2 {
+  margin: 0 0 .6rem;
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+
+.chip {
+  padding: .4rem .7rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: .82rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- help ---------- */
+
+.help { font-size: .9rem; color: var(--ink-soft); }
+.help ul { margin: 0; padding-left: 1.1rem; }
+.help li { margin-bottom: .35rem; }
+.help b { color: var(--ink); font-weight: 600; }
+.help code {
+  font-family: var(--mono);
+  font-size: .88em;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: .05em .35em;
+}
+.help-note { margin: .8rem 0 0; max-width: 60ch; }
+
+.foot {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: .82rem;
+  color: var(--ink-soft);
+}
+.foot p { margin: 0; }
