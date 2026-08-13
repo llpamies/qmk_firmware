@@ -63,11 +63,12 @@
   var NUM =
     '(?:\\d+\\s+\\d+\\s*\\/\\s*\\d+|\\d+\\s*\\/\\s*\\d+|\\d*\\.\\d+|\\d+)';
 
-  // Word units must not run into a longer word ("6 int" is not 6 inches).
+  // Word units must not run into a longer word ("6 int" is not 6 inches), but
+  // a digit may follow: "6ft3in" is written without spaces all the time.
   // The trailing period of "ft." is deliberately NOT consumed so that a
   // sentence-ending period survives outside the measurement.
   var UNIT =
-    "(?:(?:feet|foot|ft|inches|inch|in)(?![a-z0-9])|''|[\"'‘’“”′″])";
+    "(?:(?:feet|foot|ft|inches|inch|in)(?![a-z])|''|[\"'‘’“”′″])";
 
   // The space and the unit are optional *together*: an unattached number
   // must not consume the whitespace that follows it, or replacing the
@@ -160,26 +161,41 @@
     return g;
   }
 
-  function canExtend(group, token, gap) {
-    if (!CONNECTOR_RE.test(gap)) return false;
+  // How `token` joins `group`, or null when it starts a new measurement.
+  function extendMode(group, token, gap) {
+    if (!CONNECTOR_RE.test(gap)) return null;
     if (token.unit === 'ft') {
       // A second feet value means a second measurement.
-      return false;
+      return null;
     }
     if (token.unit === 'in') {
-      return group.parts.in === null;
+      return group.parts.in === null ? 'unit' : null;
     }
-    // Unitless: only a bare fraction folds into the previous part, so that
-    // stray numbers in the surrounding prose are never swallowed.
-    return token.fraction && toNumber(token.value) < 1 && group.lastUnit !== null;
+    // Unitless: a bare fraction folds into the part before it...
+    if (token.fraction && toNumber(token.value) < 1 && group.lastUnit !== null) {
+      return 'fraction';
+    }
+    // ...and a number glued straight onto a feet marker is inches: 5'6, 6ft2.
+    // The zero-length gap is what makes this safe — with any space at all the
+    // number is left alone, so prose like "the 6 ft 2 boards" is untouched.
+    if (gap === '' && group.lastUnit === 'ft' && group.parts.in === null) {
+      return 'inches';
+    }
+    return null;
   }
 
-  function extend(group, token, gap) {
-    if (token.unit) {
+  function extend(group, token, gap, mode) {
+    if (mode === 'unit') {
       group.parts[token.unit] = token.value;
       group.style[token.unit] = { mark: token.unitText, space: token.space };
       if (group.style.sep === null) group.style.sep = gap;
       group.lastUnit = token.unit;
+    } else if (mode === 'inches') {
+      // No inch marker was written, so the notation for it is derived from
+      // the feet marker when the result is formatted.
+      group.parts.in = token.value;
+      if (group.style.sep === null) group.style.sep = gap;
+      group.lastUnit = 'in';
     } else {
       group.parts[group.lastUnit] = add(group.parts[group.lastUnit], token.value);
     }
@@ -196,8 +212,9 @@
       var t = tokens[i];
       if (cur) {
         var gap = text.slice(cur.end, t.start);
-        if (canExtend(cur, t, gap)) {
-          extend(cur, t, gap);
+        var mode = extendMode(cur, t, gap);
+        if (mode) {
+          extend(cur, t, gap, mode);
           continue;
         }
         groups.push(cur);

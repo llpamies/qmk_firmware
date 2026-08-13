@@ -50,6 +50,42 @@ check('bare number as inches', inches('3 1/2'), 3.5);
 check('embedded in prose', inches('The header is 12 ft 4 in long, roughly.'), 148);
 
 /* ---------------------------------------------------------------- *
+ * Written without spaces
+ * ---------------------------------------------------------------- */
+
+check('glued units', inches('6ft3in'), 75);
+check('glued units in prose', inches('I am 6ft3in and 1/2 tall'), 75.5);
+check('glued two-digit', inches('The room is 12ft6in wide'), 150);
+check('glued word units with fraction', inches('6ft3 1/2in'), 75.5);
+check('glued symbols', inches('5\'6"'), 66);
+
+// A number glued onto a feet marker with no unit of its own is inches.
+check('bare inches glued to symbol', inches('5\'6'), 66);
+check('bare inches glued to word unit', inches('6ft2'), 74);
+check('bare glued mixed number', inches('5\'6 1/2'), 66.5);
+
+// ...but only when glued. With a space it is an ordinary prose number.
+check('spaced number is not inches', inches('6 ft 2'), 72);
+check('spaced number in prose', inches('the 6 ft 2 boards'), 72);
+
+// The unit must still not swallow a longer word.
+check('"int" is not inches', inches('I need 6 int the corner'), 'none');
+check('"info" is not inches', inches('see 6 info sheets'), 'none');
+check('"footing" is not feet', inches('pour 6 footings today'), 'none');
+
+check('add to glued input',
+  apply('I am 6ft3in and 1/2 tall', '1/2 in'),
+  'I am 6ft4in tall');
+
+check('add to glued symbols',
+  apply('The beam is 5\'6" long', '2 in'),
+  'The beam is 5\'8" long');
+
+check('bare glued inches gain a marker on output',
+  apply("a 5'6 opening", '2 in'),
+  'a 5\'8" opening');
+
+/* ---------------------------------------------------------------- *
  * Rejecting ambiguous input
  * ---------------------------------------------------------------- */
 
